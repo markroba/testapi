@@ -1,0 +1,144 @@
+---
+openapi: 3.0.2
+info:
+  title: testapilocation
+  version: 1.0.0
+  description: test api with apicurio
+paths:
+  /locations:
+    summary: Path used to manage the list of locations.
+    description: "The REST endpoint/path used to list and create zero or more `Locations`\
+      \ entities.  This path contains a `GET` and `POST` operation to perform the\
+      \ list and create tasks, respectively."
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Locations'
+          description: Successful response - returns an array of `Locations` entities.
+      operationId: getLocations
+      summary: List All Locations
+      description: Gets a list of all `Locations` entities.
+    post:
+      requestBody:
+        description: A new `Locations` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Locations'
+        required: true
+      responses:
+        "201":
+          description: Successful response.
+      operationId: createLocations
+      summary: Create a Locations
+      description: Creates a new instance of a `Locations`.
+  /locations/{locationsId}:
+    summary: Path used to manage a single Locations.
+    description: "The REST endpoint/path used to get, update, and delete single instances\
+      \ of an `Locations`.  This path contains `GET`, `PUT`, and `DELETE` operations\
+      \ used to perform the get, update, and delete tasks, respectively."
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Locations'
+          description: Successful response - returns a single `Locations`.
+      operationId: getLocations
+      summary: Get a Locations
+      description: Gets the details of a single instance of a `Locations`.
+    put:
+      requestBody:
+        description: Updated `Locations` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Locations'
+        required: true
+      responses:
+        "202":
+          description: Successful response.
+      operationId: updateLocations
+      summary: Update a Locations
+      description: Updates an existing `Locations`.
+    delete:
+      responses:
+        "204":
+          description: Successful response.
+      operationId: deleteLocations
+      summary: Delete a Locations
+      description: Deletes an existing `Locations`.
+    parameters:
+    - name: locationsId
+      description: A unique identifier for a `Locations`.
+      schema:
+        type: string
+      in: path
+      required: true
+  /locationsvips:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Locations'
+              examples:
+                list-locationsvips:
+                  value:
+                  - id: 90
+                    name: some text
+                    location:
+                      lat: 14.27
+                      lng: 80.91
+                    type: some text
+                    status: 26
+                  - id: 75
+                    name: some text
+                    location:
+                      lat: 43.36
+                      lng: 50.84
+                    type: some text
+                    status: 66
+components:
+  schemas:
+    Locations:
+      title: Root Type for Locations
+      description: Office locations
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          type: string
+        location:
+          type: object
+          properties:
+            lat:
+              format: double
+              type: number
+            lng:
+              format: double
+              type: number
+        type:
+          type: string
+        status:
+          format: int32
+          type: integer
+      example:
+        id: 1
+        name: International Inc Corporate Office
+        location:
+          lat: 51.5013673
+          lng: -0.1440787
+        type: headquarter
+        status: "1"
